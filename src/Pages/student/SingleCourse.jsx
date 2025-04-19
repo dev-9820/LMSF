@@ -19,12 +19,12 @@ const SingleCourse = () => {
   const fetchCourseData = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.post("http://localhost:8000/course/singleCourse", {
+      const { data } = await axios.post("https://lmsb-miy9.onrender.com/course/singleCourse", {
         courseId
       });
       setCourseData(data.course);
 
-      const progressRes = await axios.post("http://localhost:8000/user/getProgress", {
+      const progressRes = await axios.post("https://lmsb-miy9.onrender.com/user/getProgress", {
         userId,
         courseId
       });
@@ -46,7 +46,7 @@ const SingleCourse = () => {
       setCompletedModules(newCompletedModules);
       setCurrentModule(newCurrentModule);
 
-      await axios.post("http://localhost:8000/user/updateProgress", {
+      await axios.post("https://lmsb-miy9.onrender.com/user/updateProgress", {
         userId,
         courseId,
         completedModules: newCompletedModules,

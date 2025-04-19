@@ -36,7 +36,7 @@ const userId = user._id;
     console.log("POSTING COURSE DATA",newcourseData)
     try {
       // Make a POST request to the backend
-      const response = await axios.post("http://localhost:8000/gencourse/add", newcourseData);
+      const response = await axios.post("https://lmsb-miy9.onrender.com/gencourse/add", newcourseData);
       
       // Handle success
       toast.success("Course saved successfully:");

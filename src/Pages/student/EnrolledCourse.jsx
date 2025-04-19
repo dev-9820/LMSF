@@ -16,7 +16,7 @@ const EnrolledCourse = () => {
   const getSingleUser = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.post("http://localhost:8000/user/get-user", {
+      const { data } = await axios.post("https://lmsb-miy9.onrender.com/user/get-user", {
         id: userId,
       });
       setCourses(data?.user?.enrolledCourses || []);
@@ -30,7 +30,7 @@ const EnrolledCourse = () => {
   const handleRemoveEnrollment = async (courseId) => {
     if (window.confirm("Are you sure you want to unenroll from this course?")) {
       try {
-        await axios.post("http://localhost:8000/user/removeEnroll", {
+        await axios.post("https://lmsb-miy9.onrender.com/user/removeEnroll", {
           userId,
           courseId,
         });

@@ -21,7 +21,7 @@ const Questions = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/course/singleQuiz",
+        "https://lmsb-miy9.onrender.com/course/singleQuiz",
         { quizId }
       );
       setQuizName(data?.quiz?.quizName);
@@ -57,7 +57,7 @@ const Questions = () => {
 
     setIsLoading(true);
     try {
-      await axios.post("http://localhost:8000/course/addQuestion", {
+      await axios.post("https://lmsb-miy9.onrender.com/course/addQuestion", {
         quizId,
         question: questionData.question,
         option: questionData.options,
@@ -80,7 +80,7 @@ const Questions = () => {
   const deleteQuestion = async (questionId) => {
     if (window.confirm("Are you sure you want to delete this question?")) {
       try {
-        await axios.post(`http://localhost:8000/course/deleteQuestion`, { questionId });
+        await axios.post(`https://lmsb-miy9.onrender.com/course/deleteQuestion`, { questionId });
         await getQuiz();
       } catch (error) {
         console.error("Error deleting question:", error);

@@ -22,7 +22,7 @@ const Login = () => {
         return;
       }
       
-      const response = await axios.post("http://localhost:8000/user/login", {
+      const response = await axios.post("https://lmsb-miy9.onrender.com/user/login", {
         email,
         password,
       });

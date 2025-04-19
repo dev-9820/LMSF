@@ -17,11 +17,11 @@ const AllCourses = () => {
     setIsLoading(true);
     try {
       // Fetch all available courses
-      const { data } = await axios.get("http://localhost:8000/course/allCourses");
+      const { data } = await axios.get("https://lmsb-miy9.onrender.com/course/allCourses");
       setCourses(data.courses || []);
       
       // Fetch user's enrolled courses
-      const userData = await axios.post("http://localhost:8000/user/get-user", {
+      const userData = await axios.post("https://lmsb-miy9.onrender.com/user/get-user", {
         id: userId
       });
       setEnrolledCourses(userData.data.user?.enrolledCourses || []);
@@ -34,7 +34,7 @@ const AllCourses = () => {
 
   const handleEnroll = async (courseId) => {
     try {
-      await axios.post("http://localhost:8000/user/enrollCourse", {
+      await axios.post("https://lmsb-miy9.onrender.com/user/enrollCourse", {
         courseId,
         userId
       });

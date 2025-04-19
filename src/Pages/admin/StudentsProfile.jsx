@@ -17,7 +17,7 @@ const StudentProfile = () => {
 
   const getUserData = async () => {
     try {
-      const { data } = await axios.post("http://localhost:8000/user/get-user", {
+      const { data } = await axios.post("https://lmsb-miy9.onrender.com/user/get-user", {
         id: userId,
       });
       setUser(data.user);
@@ -29,7 +29,7 @@ const StudentProfile = () => {
 
   const fetchResults = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/results/user/${userId}`);
+      const response = await axios.get(`https://lmsb-miy9.onrender.com/results/user/${userId}`);
       setResults(response.data || []);
     } catch (error) {
       console.error("Error fetching results:", error);

@@ -109,7 +109,7 @@ const Course = () => {
     };
 
     try {
-      await axios.post("http://localhost:8000/course/createCourse", courseData);
+      await axios.post("https://lmsb-miy9.onrender.com/course/createCourse", courseData);
       alert("Course added successfully!");
       toggleModal();
       fetchCourses();
@@ -124,7 +124,7 @@ const Course = () => {
   const fetchCourses = async () => {
     setIsLoading(true);
     try {
-      const { data } = await axios.get("http://localhost:8000/course/allCourses");
+      const { data } = await axios.get("https://lmsb-miy9.onrender.com/course/allCourses");
       setCourses(data.courses);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -136,7 +136,7 @@ const Course = () => {
   const deleteCourse = async (courseId) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
       try {
-        await axios.post(`http://localhost:8000/course/delete`, { courseId });
+        await axios.post(`https://lmsb-miy9.onrender.com/course/delete`, { courseId });
         alert("Course deleted successfully!");
         fetchCourses();
       } catch (error) {

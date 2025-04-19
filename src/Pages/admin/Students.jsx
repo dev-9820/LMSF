@@ -14,7 +14,7 @@ const Students = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.get(
-        "http://localhost:8000/user/getAllstudents"
+        "https://lmsb-miy9.onrender.com/user/getAllstudents"
       );
       setAllUsers(data.user || []);
     } catch (error) {

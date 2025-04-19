@@ -29,9 +29,9 @@ const Profile = () => {
     try {
       // Fetch all data in parallel
       const [userData, curatedData, resultsData] = await Promise.all([
-        axios.post("http://localhost:8000/user/get-user", { id: userId }),
-        axios.get(`http://localhost:8000/gencourse/all/${userId}`),
-        axios.get(`http://localhost:8000/results/user/${userId}`)
+        axios.post("https://lmsb-miy9.onrender.com/user/get-user", { id: userId }),
+        axios.get(`https://lmsb-miy9.onrender.com/gencourse/all/${userId}`),
+        axios.get(`https://lmsb-miy9.onrender.com/results/user/${userId}`)
       ]);
 
       setEnrolledCourses(userData.data?.user?.enrolledCourses || []);

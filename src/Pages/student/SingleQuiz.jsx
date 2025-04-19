@@ -42,7 +42,7 @@ const SingleQuiz = () => {
     setIsLoading(true);
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/course/singleQuiz",
+        "https://lmsb-miy9.onrender.com/course/singleQuiz",
         { quizId }
       );
       setQuiz(data?.quiz);
@@ -83,7 +83,7 @@ const SingleQuiz = () => {
     setScore(percentageScore);
 
     try {
-      await axios.post("http://localhost:8000/results/save", {
+      await axios.post("https://lmsb-miy9.onrender.com/results/save", {
         title: quiz.quizName,
         score: percentageScore,
         timeTaken: 600 - timeLeft, // Time taken in seconds
