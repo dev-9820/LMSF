@@ -1,20 +1,78 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef  } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiBook, FiCheck, FiClock, FiLock, FiChevronRight } from "react-icons/fi";
+import { FiBook, FiCheck, FiClock, FiLock, FiChevronRight,FiDownload  } from "react-icons/fi";
 import axios from "axios";
 import StudentHeader from "../../components/StudentHeader";
 import Timer from "../../components/Timer";
+import { usePDF } from 'react-to-pdf';
+
+const Certificate = ({ courseName, userName, completionDate }) => {
+  return (
+    <div className="w-full max-w-4xl mx-auto p-8 bg-white border-8 border-yellow-400">
+      <div className="text-center">
+        <div className="mb-6">
+          <h1 className="text-5xl font-bold text-blue-800 mb-2">Certificate of Completion</h1>
+          <p className="text-xl text-gray-600">This is to certify that</p>
+        </div>
+        
+        <div className="my-8">
+          <h2 className="text-4xl font-bold text-blue-700 mb-4">{userName}</h2>
+          <div className="h-1 bg-gradient-to-r from-blue-400 to-purple-500 w-3/4 mx-auto"></div>
+        </div>
+        
+        <p className="text-xl text-gray-700 mb-6">
+          has successfully completed the course
+        </p>
+        
+        <h3 className="text-3xl font-bold text-blue-800 mb-6">{courseName}</h3>
+        
+        <div className="flex justify-between mt-12">
+          <div className="text-center">
+            <div className="h-1 bg-gray-400 w-32 mx-auto mb-2"></div>
+            <p className="text-gray-600">Date</p>
+            <p className="font-medium">{completionDate}</p>
+          </div>
+          <div className="text-center">
+            <div className="h-1 bg-gray-400 w-32 mx-auto mb-2"></div>
+            <p className="text-gray-600">Certificate ID</p>
+            <p className="font-medium">
+              {Math.random().toString(36).substring(2, 10).toUpperCase()}
+            </p>
+          </div>
+        </div>
+        
+        <div className="mt-12">
+          <div className="flex justify-center">
+            <div className="w-32 h-32 bg-blue-100 rounded-full flex items-center justify-center">
+              <svg className="w-20 h-20 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const SingleCourse = () => {
   const courseId = JSON.parse(localStorage.getItem("userSelectedCourse"));
   const userId = JSON.parse(localStorage.getItem("user"))?._id;
+  const user = JSON.parse(localStorage.getItem("user"))
   const [courseData, setCourseData] = useState(null);
   const [currentModule, setCurrentModule] = useState(0);
   const [completedModules, setCompletedModules] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [timeExpired, setTimeExpired] = useState(false);
   const navigate = useNavigate();
+
+  const certificateRef = useRef();
+  const { toPDF, targetRef } = usePDF({filename: `${courseData?.courseName || 'Course'}_Certificate.pdf`});
+  
+  const handleDownloadCertificate = () => {
+    toPDF();
+  };
 
   const fetchCourseData = async () => {
     setIsLoading(true);
@@ -243,6 +301,33 @@ const SingleCourse = () => {
                         <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg text-center">
                           <h3 className="text-2xl font-bold text-green-800 mb-3">Course Completed!</h3>
                           <p className="text-gray-700 mb-4">Congratulations on completing this course.</p>
+
+                         
+                          <div className="mt-6">
+        <div ref={targetRef} className="mb-6">
+          <Certificate 
+            courseName={courseData.courseName} 
+            userName={user?.name || "Student"} 
+            completionDate={new Date().toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          />
+        </div>
+        
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={handleDownloadCertificate}
+          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg shadow-md flex items-center mx-auto"
+        >
+          <FiDownload className="mr-2" />
+          Download Certificate
+        </motion.button>
+      </div>
+                          
+
                           {courseData.quizes?.length > 0 && (
                             <div className="mt-4">
                               <h4 className="font-medium text-gray-800 mb-2">Available Quizzes:</h4>
